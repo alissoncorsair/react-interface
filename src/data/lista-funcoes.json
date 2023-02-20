@@ -1,0 +1,99 @@
+{
+    "data":
+    [
+        {
+            "name": "somar",
+            "supportedValueTypes":
+            [
+                "COL",
+                "LIT"
+            ],
+            "supportedDataTypes":
+            [
+                
+                "DATE",
+                "DATE_TIME",
+                "DOUBLE",
+                "EMAIL",
+                "GEO_POINT",
+                "GEO_POLYGON",
+                "HASH",
+                "IP",
+                "LONG",
+                "PHONE",
+                "STRING",
+                "URL"
+              
+            ],
+            "dataFormat2Save":
+            [
+                {
+                    "type": "COL",
+                    "column":
+                    {
+                        "columnId": "",
+                        "columnName": "",
+                        "columnType": ""
+                    }
+                },
+                {
+                    "type": "LIT",
+                    "literalValue":""
+                }
+            ]
+        },
+        {
+            "name": "subtrair",
+            "supportedValueTypes":
+            [
+                "COL",
+                "LIT"
+            ],
+            "supportedDataTypes":
+            [
+                "DATE",
+                "DATE_TIME",
+                "DOUBLE",
+                "EMAIL",
+                "HASH",
+                "PHONE",
+                "STRING"
+            ],
+            "dataFormat2Save":
+            [
+                {
+                    "type": "COL",
+                    "column":
+                    {
+                        "columnId": "",
+                        "columnName": "",
+                        "columnType": ""
+                    }
+                },
+                {
+                    "type": "LIT",
+                    "literalValue":""
+                }
+            ]
+        },
+        {
+            "name": "filtrar",
+            "supportedValueTypes":
+            [
+                "LIT"
+            ],
+            "supportedDataTypes":
+            [                             
+                "STRING"
+            ],
+            "dataFormat2Save":
+            [
+                
+                {
+                    "type": "LIT",
+                    "literalValue":""
+                }
+            ]
+        }
+    ]
+}

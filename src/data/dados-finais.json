@@ -1,0 +1,32 @@
+{
+    "outputdata":
+    {
+        "id": "",
+        "cells":
+        [
+            {
+                "id": "",
+                "functionName": "",
+                "param":
+                {
+                    "type": "COL",
+                    "column":
+                    {
+                        "columnId": "",
+                        "columnName": "",
+                        "columnType": ""
+                    }
+                }
+            },
+            {
+                "id": "",
+                "functionName": "",
+                "param":
+               {
+                    "type": "LIT",
+                    "literalValue":""
+                }
+            }
+        ]
+    }
+}

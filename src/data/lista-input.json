@@ -1,0 +1,76 @@
+{
+	"inputList": [
+
+		{
+			"fileName": "file1.csv",
+			"columns": [{
+					"columnId": "f01",
+					"columnName": "f01",
+					"columnType": "PHONE"
+				},
+				{
+					"columnId": "f01a",
+					"columnName": "f01a",
+					"columnType": "LONG"
+				},
+				{
+					"columnId": "f01b",
+					"columnName": "f01b",
+					"columnType": "STRING"
+				},
+				{
+					"columnId": "f01c",
+					"columnName": "f01c",
+					"columnType": "STRING"
+				},
+				{
+					"columnId": "f01d",
+					"columnName": "f01d",
+					"columnType": "LONG"
+				},
+				{
+					"columnId": "tt__id",
+					"columnName": "tt__id",
+					"columnType": "STRING"
+				},
+				{
+					"columnId": "f01e",
+					"columnName": "f01e",
+					"columnType": "BOOLEAN"
+				}
+			]
+		},
+
+		{
+			"fileName": "file2.csv",
+			"columns": [{
+					"columnId": "f02",
+					"columnName": "f02",
+					"columnType": "STRING"
+				}, {
+					"columnId": "f02a",
+					"columnName": "f02a",
+					"columnType": "LONG"
+				}
+
+			]
+		},
+
+		{
+			"fileName": "file3.csv",
+			"columns": [{
+					"columnId": "f03",
+					"columnName": "f03",
+					"columnType": "DATE"
+				},
+				{
+					"columnId": "f03a",
+					"columnName": "f03a",
+					"columnType": "LONG"
+				}
+
+			]
+		}
+
+	]
+}
