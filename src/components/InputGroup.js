@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { functions, list } from "../data/inputGroups";
+import { functions, inputTypes, listV2 } from "../data/inputGroups";
 import listaFuncoes from "../data/lista-funcoes.json";
 
 import Select from "./Select";
@@ -11,15 +11,29 @@ const InputGroup = ({
   setData = () => {},
 }) => {
   const componentId = id;
-  const DEFAULT_SELECTED_INPUT = {
-    id: componentId,
-    columnId: list[0].id,
-    columnName: list[0].name,
-  };
-  const [selectedInput, setSelectedInput] = useState(DEFAULT_SELECTED_INPUT);
-  const [selectedColumn, setSelectedColumn] = useState("DATE");
+
+  const [selectedInput, setSelectedInput] = useState("file1.csv");
+  const [selectedColumn, setSelectedColumn] = useState("f01");
   const [selectedFunction, setFunction] = useState("somar");
   const [literalValue, setLiteralValue] = useState("");
+  const [availableColumns, setAvailableColumns] = useState([]);
+  const [sanitizedAvailableColumns, setSanitizedAvailableColumns] = useState(
+    []
+  );
+  const [currentSupportedDataTypes, setCurrentSupportedDataTypes] = useState([
+    "DATE",
+    "DATE_TIME",
+    "DOUBLE",
+    "EMAIL",
+    "GEO_POINT",
+    "GEO_POLYGON",
+    "HASH",
+    "IP",
+    "LONG",
+    "PHONE",
+    "STRING",
+    "URL",
+  ]);
 
   const [selectedParamType, setSelectedParamType] = useState("");
   const [paramType, setParamType] = useState([]);
@@ -27,7 +41,12 @@ const InputGroup = ({
 
   const handleChangeParamType = useCallback((event) => {
     const functionName = event?.currentTarget?.value;
+
     const params = listaFuncoes.data?.find(({ name }) => name === functionName);
+    setCurrentSupportedDataTypes(
+      params.supportedDataTypes.map((column) => column)
+    );
+
     setParamType(
       params.supportedValueTypes.map((column) => ({
         id: column,
@@ -50,9 +69,9 @@ const InputGroup = ({
           param: {
             type: selectedParamType,
             column: {
-              columnId: selectedInput.columnId,
-              columnName: selectedInput.columnName,
-              columnType: selectedColumn,
+              columnId: selectedColumn.columnId,
+              columnName: selectedColumn.columnName,
+              columnType: selectedColumn.columnType,
             },
           },
         };
@@ -86,19 +105,45 @@ const InputGroup = ({
     setData,
   ]);
 
-  const handleSelectedInput = useCallback((event) => {
-    const input = event?.currentTarget?.value;
-    const inputSelected = list.find(({ id }) => id === input);
-    setSelectedInput({
-      columnId: inputSelected.id,
-      columnName: inputSelected.name,
-    });
-  }, []);
+  const handleSelectedInputV2 = useCallback(
+    (event) => {
+      const input = event?.currentTarget?.value;
+      const inputSelected = listV2.find(({ fileName }) => fileName === input);
+      setSelectedInput({
+        fileName: inputSelected.fileName,
+      });
+      const filtered = inputSelected.columns.filter((column) => {
+        return currentSupportedDataTypes.includes(column.columnType);
+      });
 
-  const handleChangeSelectedColumn = useCallback((event) => {
-    const column = event?.currentTarget?.value;
-    setSelectedColumn(column);
-  }, []);
+      setAvailableColumns(filtered);
+    },
+    [currentSupportedDataTypes]
+  );
+
+  useEffect(() => {
+    const sanitizedAvailableColumns = availableColumns
+      .map((column) => ({
+        id: column.columnId,
+        name: column.columnName,
+        type: column.columnType,
+      }))
+      .filter((column) => {
+        return currentSupportedDataTypes.includes(column.type);
+      });
+    setSanitizedAvailableColumns(sanitizedAvailableColumns);
+  }, [availableColumns, currentSupportedDataTypes]);
+
+  const handleChangeSelectedColumn = useCallback(
+    (event) => {
+      const column = event?.currentTarget?.value;
+      const columnSelected = availableColumns.find(
+        ({ columnName }) => columnName === column
+      );
+      setSelectedColumn(columnSelected);
+    },
+    [availableColumns]
+  );
 
   useEffect(() => {
     const { supportedValueTypes } = listaFuncoes.data[0];
@@ -108,6 +153,16 @@ const InputGroup = ({
     }));
 
     setParamType(paramsType);
+
+    const defaultSelectedColumn = listV2.find(
+      ({ fileName }) => fileName === "file1.csv"
+    );
+    setAvailableColumns(defaultSelectedColumn.columns);
+
+    const columnSelected = defaultSelectedColumn.columns.find(
+      ({ columnName }) => columnName === "f01"
+    );
+    setSelectedColumn(columnSelected);
   }, []);
 
   useEffect(() => {
@@ -128,8 +183,8 @@ const InputGroup = ({
     <div className="w-fit mx-auto grid grid-cols-5 gap-8">
       <Select
         titleProp="Escolha Input"
-        data={list}
-        onChange={handleSelectedInput}
+        data={inputTypes()}
+        onChange={handleSelectedInputV2}
       />
 
       <Select
@@ -158,7 +213,7 @@ const InputGroup = ({
         <Select
           disabled={lastInput.length === 0}
           titleProp="Escolha coluna"
-          data={lastInput}
+          data={sanitizedAvailableColumns}
           onChange={handleChangeSelectedColumn}
         />
       )}

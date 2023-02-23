@@ -12,6 +12,27 @@ export const list = inputs.inputList.reduce(
   []
 );
 
+export const listV2 = inputs.inputList.map((input) => {
+  return {
+    fileName: input.fileName,
+    columns: input.columns.map((colObj) => {
+      return {
+        columnId: colObj.columnId,
+        columnName: colObj.columnName,
+        columnType: colObj.columnType,
+      };
+    }),
+  };
+});
+
+export const inputTypes = () =>
+  listV2.map((input) => {
+    return {
+      id: input.fileName,
+      name: input.fileName,
+    };
+  });
+
 export const functions = listaFuncoes.data.reduce(
   (prev, current) => [
     ...prev,
